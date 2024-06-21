@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: example-app
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,6 +21,13 @@ spec:
         app: example-app
     spec:
       containers:
+      - name: web
+        image: nginx
+        volumeMounts:
+        - name: secret-volume
+          mountPath: /secrets/
+        - name: config-volume
+          mountPath: /configs/
       - name: example-app
         image: aimvector/python:1.0.1
         imagePullPolicy: Always
